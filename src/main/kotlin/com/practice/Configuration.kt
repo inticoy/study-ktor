@@ -12,4 +12,4 @@ val JWT_ALGORITHM = Algorithm.HMAC256(JWT_SECRET)
 const val AWS_RDS_BASEURL = "new-manito.c9srcex7gxvr.ap-northeast-2.rds.amazonaws.com"
 const val AWS_RDS_PORT = 3306
 const val AWS_RDS_USER = "admin"
-const val AWS_RDS_PASSWORD = "sinmanito"
+const val AWS_RDS_PASSWORD = "tlsakslEh"

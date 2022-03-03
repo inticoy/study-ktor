@@ -7,8 +7,9 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 val client = HttpClient(CIO) {
-    install(ContentNegotiation){
-        json(Json{
+    expectSuccess = false
+    install(ContentNegotiation) {
+        json(Json {
             prettyPrint = true
             ignoreUnknownKeys = true
         })

@@ -12,8 +12,8 @@ import io.ktor.client.statement.*
 fun main() {
     embeddedServer(Netty, port = PORT, host = HOST) {
         configureDatabase()
-        configureRouting()
         configureSecurity()
+        configureRouting()
         configureSerialization()
     }.start(wait = true)
 }

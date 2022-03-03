@@ -11,11 +11,12 @@ import com.practice.JWT_ISSUER
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
+import java.util.*
 
 fun Application.configureSecurity() {
 
     authentication {
-        jwt {
+        jwt("auth-jwt") {
             verifier(
                 JWT
                     .require(JWT_ALGORITHM)
@@ -30,5 +31,11 @@ fun Application.configureSecurity() {
             }
         }
     }
-
 }
+
+fun makeServerAccessToken(userId: Int) =
+    JWT.create()
+        .withIssuer(JWT_ISSUER)
+        .withClaim("userId", userId)
+        .withExpiresAt(Date(System.currentTimeMillis() + 432000000))
+        .sign(JWT_ALGORITHM)

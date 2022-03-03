@@ -4,6 +4,7 @@ import com.practice.database.Database
 import com.practice.dto.Token
 import com.practice.network.body.KakaoTokenInfoBody
 import com.practice.network.client
+import com.practice.plugins.makeServerAccessToken
 import io.ktor.client.call.*
 import io.ktor.client.request.*
 import io.ktor.http.*
@@ -20,7 +21,11 @@ fun Route.kakaoRouting() {
                 append(HttpHeaders.Authorization, "Bearer ${token.kakaoAccessToken}")
             }
         }.body()
-        val user = Database.findUserByKakaoId(kakaoTokenInfo.id) ?: return@post call.respond(status = HttpStatusCode.NotFound, message = "Not found")
-        call.respond(token)
+        kakaoTokenInfo.msg?.let {
+            return@post call.respond(status = HttpStatusCode.BadRequest, message = it)
+        }
+        val user = Database.findUserByKakaoId(kakaoTokenInfo.id!!)
+            ?: return@post call.respond(status = HttpStatusCode.NotFound, message = "Not found")
+        call.respond(Token(serverAccessToken = makeServerAccessToken(user.id.value)))
     }
 }

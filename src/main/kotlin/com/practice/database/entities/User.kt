@@ -8,9 +8,12 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 // table 명명
 object Users : IntIdTable() {
     val kakaoId = long("kakaoId").nullable().uniqueIndex()
+    val nickname = varchar("nickname", 20)
 }
 
 class User(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<User>(Users)
+
     var kakaoId by Users.kakaoId
+    var nickname by Users.nickname
 }
